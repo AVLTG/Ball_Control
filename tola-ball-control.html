@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset = "UTF-8">
+        <title> Ball Control Task</title>
+        <style> 
+            #bob, h3, p{
+                text-align: center;
+            }
+         </style>
+    </head>
+    <body>
+        <h3> Legend: </h3>
+        <p>SPACE = Start/Stop Objects. UP = Speed Up Circle. DOWN = Slow Down Circle. Z = Toggle Trails. W = Increase Canvas Size. S = Decrease Canvas Size. O = Decrease Opacity. R = Randomize Color. E = Decrease Size Of Ball. Q = Increase Size Of Ball.  
+        </p>
+        <div id = bob>
+        <canvas id = "myCanvas" tabindex = "1"></canvas>
+        </div>
+        <script>
+        
+
+            var canvas = document.getElementById("myCanvas"); 
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            var c = canvas.getContext("2d");
+            canvas.width -= 25;
+            canvas.height -= 150;
+            var size = 50;
+            var x = canvas.width / 2;
+            var y = canvas.height / 2; 
+            var dx = 10;
+            var dy = 10;
+            var speedChange = 1;
+            var value = 0;
+            var trail = 1;
+            var colorChoice = "100,255,100";
+            var opacityLevel = "1";
+            var color = "rgba("+colorChoice+","+opacityLevel+")";
+            c.fillStyle = color
+            c.arc(x,y,size,0,Math.PI*2,true);
+            c.fill();
+            c.stroke();
+            canvas.addEventListener("keydown", moveCircle);
+         
+            function moveCircle(e) {
+                if(e.keyCode != 38 && e.keyCode != 40 && e.keyCode != 82 && e.keyCode != 79 && e.keyCode != 81 && e.keyCode != 69 && e.keyCode != 90 && e.keyCode != 87 && e.keyCode != 83 && e.keyCode != 32 && e.keyCode != null){} 
+                else if(e.keyCode == 38){ 
+                    
+                    if(dx <= 0){
+                        dx -= speedChange;
+                    }
+                    else if(dx >= 0){
+                        dx += speedChange;
+                    }
+                    if(dy <= 0){
+                        dy -= speedChange;
+                    }
+                    else if(dy >= 0){
+                        dy += speedChange;
+                    } 
+
+                }
+                else if(e.keyCode == 40){
+
+                    if(dx < -1){
+                        dx += speedChange;
+                    }
+                    else if(dx > 1){
+                        dx -= speedChange;
+                    }
+                    if(dy < -1){
+                        dy += speedChange;
+                    }
+                    else if(dy > 1){
+                        dy -= speedChange;
+                    } 
+                }
+                else if(e.keyCode == 82){
+                    colorChoice = (Math.floor(Math.random()*255) + 1)+","+(Math.floor(Math.random()*255) + 1)+","+(Math.floor(Math.random()*255) + 1);
+                }
+                else if(e.keyCode == 79){
+                    opacityLevel = opacityLevel - 0.1
+                    if (opacityLevel <= 0.1){
+                        alert("YOU FELL FOR IT FOOL! THUNDER CROSS SPLIT ATTACK! 🙅‍♂️")
+                        window.location.replace("https://www.youtube.com/watch?v=dQw4w9WgXcQ");
+                    }
+                }
+                else if(e.keyCode == 87){
+                    if (canvas.height < window.innerHeight){
+                        canvas.width += 20
+                        canvas.height +=20
+                    }
+                }
+                else if(e.keyCode == 83){
+                    if (canvas.height > 200){
+                        canvas.width -= 20
+                        canvas.height -=20
+                    }
+                }
+                else if(e.keyCode == 81){
+                    if(size < 100){
+                        size += 5;
+                    }
+                }
+                else if(e.keyCode == 69){
+                    if(size > 25){
+                        size -= 5;
+                    }
+                    
+                    
+                }
+                else if(e.keyCode == 90){
+                    if (trail == 0){
+                        trail = 1;
+                    }
+                    else if (trail == 1){
+                        trail = 0; 
+                    }
+                }
+                
+                else{
+                if(e.keyCode == 32) {
+                    value++;
+                }
+                if(value % 2 == 1) {
+                    if(trail == 1){
+                        c.clearRect(0, 0, canvas.width, canvas.height);
+                    }
+                    requestAnimationFrame(moveCircle); 
+                    c.beginPath();
+                    var color = "rgba("+ colorChoice +","+opacityLevel+")";
+
+                    c.fillStyle = color
+                    c.arc(x,y,size,0,Math.PI*2,true);
+                    c.fill();
+                    
+                
+                    if (x > canvas.width - (size) || x - (size) < 0){
+                        dx = -dx;
+                    }
+                    if (y > canvas.height - (size) || y - (size)< 0){
+                        dy = -dy;
+                    }
+                    y += dy;
+                    x += dx;
+                }
+            }
+            }
+          
+          
+            
+           
+            
+        </script>
+    </body>
+</html>
